@@ -114,8 +114,9 @@ static void init_snake(snake_t * snake)
 	snake->x = col / 2 + 1;
 	snake->y = row / 2;
 	snake->prev = NULL;
+	snake->next = NULL;
 
-	for (int i = 0; i <SNAKE_LEN; ++i) {
+	for (int i = 0; i < SNAKE_LEN; ++i) {
 		add_part(snake);
 	}
 }
@@ -270,8 +271,6 @@ int main(void)
 	food_t *food;
 	food = malloc(sizeof(food_t));
 	init_snake(snake);
-	add_part(snake);
-	add_part(snake);
 	spawn_food(snake, food);
 
 	while (1) {
