@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#define SNAKE_LEN 3
+
 typedef enum {
 	up, right, down, left
 } direction;
@@ -19,6 +21,10 @@ typedef struct food {
 } food_t;
 
 int row, col;
+
+/*
+ * Spawns the food at random co ordinates
+ */
 static void spawn_food(snake_t * snake, food_t * food)
 {
 	int x, y;
@@ -29,6 +35,7 @@ static void spawn_food(snake_t * snake, food_t * food)
 	snake_t *temp;
 	temp = snake;
 
+	// Check if location is on the snake
 	while (temp) {
 		if (x == temp->x && y == temp->y) {
 			flag = true;
@@ -37,6 +44,7 @@ static void spawn_food(snake_t * snake, food_t * food)
 		temp = temp->next;
 	}
 
+	// Try again
 	if (flag == true) {
 		spawn_food(snake, food);
 	} else {
@@ -45,6 +53,8 @@ static void spawn_food(snake_t * snake, food_t * food)
 	}
 }
 
+
+// Increase the snake length
 static void add_part(snake_t * snake)
 {
 	snake_t *temp, *prev;
@@ -81,6 +91,9 @@ static void add_part(snake_t * snake)
 	temp->prev = prev;
 }
 
+/*
+ * Initialise ncurses
+ */
 static void init(void)
 {
 	initscr();
@@ -92,6 +105,9 @@ static void init(void)
 	curs_set(0);
 }
 
+/*
+ * Initialise snake
+ */
 static void init_snake(snake_t * snake)
 {
 	snake->dir = right;
@@ -99,19 +115,21 @@ static void init_snake(snake_t * snake)
 	snake->y = row / 2;
 	snake->prev = NULL;
 
-	snake->next = malloc(sizeof(snake_t));
-	snake->next->x = col / 2;
-	snake->next->y = row / 2;
-	snake->next->dir = right;
-	snake->next->next = NULL;
-	snake->next->prev = snake;
+	for (int i = 0; i <SNAKE_LEN; ++i) {
+		add_part(snake);
+	}
 }
 
+/*
+ * Print snake
+ */
 static void print_snake(snake_t * snake)
 {
 	clear();
 	snake_t *temp;
 	temp = snake;
+
+	// Drawn head
 	char head;
 	switch (snake->dir) {
 	case up:
@@ -128,6 +146,8 @@ static void print_snake(snake_t * snake)
 		break;
 	}
 	mvaddch(temp->y, temp->x, head);
+
+	// Draw body
 	temp = temp->next;
 	char body;
 	while (temp) {
@@ -142,14 +162,22 @@ static void print_snake(snake_t * snake)
 
 }
 
+/*
+ * Move snake in direction of head, checking if it collides with food
+ * TODO Check for collision with self
+ * TODO Implement score keeping
+ */
 static void move_snake(snake_t * snake, food_t * food)
 {
 	snake_t *temp;
 	temp = snake;
+
+	// Find last part
 	while (temp->next) {
 		temp = temp->next;
 	}
 
+	// Set part location to previous part location
 	while (temp->prev) {
 		temp->x = temp->prev->x;
 		temp->y = temp->prev->y;
@@ -157,6 +185,7 @@ static void move_snake(snake_t * snake, food_t * food)
 		temp = temp->prev;
 	}
 
+	// Move snake head in original or specified direction
 	int ch = getch();
 	switch (ch) {
 	case KEY_UP:
@@ -183,6 +212,7 @@ static void move_snake(snake_t * snake, food_t * food)
 		break;
 	}
 
+	// Let snake wrap around
 	switch (snake->dir) {
 	case up:
 		if (snake->y == 0) {
@@ -214,12 +244,17 @@ static void move_snake(snake_t * snake, food_t * food)
 		break;
 	}
 
+	// If snake collides with food, respawn food and increase snake length
 	if (snake->x == food->x && snake->y == food->y) {
 		add_part(snake);
 		spawn_food(snake, food);
 	}
 
 }
+
+/*
+ * Prints the food
+ */
 
 static void print_food(food_t * food)
 {
