@@ -57,8 +57,25 @@ static void add_part(snake_t * snake)
 	temp->next = malloc(sizeof(snake_t));
 	prev = temp;
 	temp = temp->next;
-	temp->x = prev->x - 1;
-	temp->y = prev->y;
+	switch (prev->dir) {
+		case up:
+			temp->x = prev->x;
+			temp->y = prev->y + 1;
+			break;
+		case right:
+			temp->x = prev->x - 1;
+			temp->y = prev->y;
+			break;
+		case down:
+			temp->x = prev->x;
+			temp->y = prev->y + 1;
+			break;
+		case left:
+			temp->x = prev->x + 1;
+			temp->y = prev->y;
+			break;
+	}
+
 	temp->dir = prev->dir;
 	temp->next = NULL;
 	temp->prev = prev;
