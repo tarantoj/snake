@@ -245,7 +245,7 @@ int main(void)
 		move_snake(snake, food);
 		if (getch() == 'q')
 			break;
-		sleep(1);
+		usleep(500000);
 
 	}
 
