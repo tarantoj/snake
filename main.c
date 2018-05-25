@@ -19,7 +19,8 @@ typedef struct food {
 } food_t;
 
 int row, col;
-static void spawn_food(snake_t *snake, food_t *food) {
+static void spawn_food(snake_t * snake, food_t * food)
+{
 	int x, y;
 	x = rand() % col;
 	y = rand() % row;
@@ -28,7 +29,7 @@ static void spawn_food(snake_t *snake, food_t *food) {
 	snake_t *temp;
 	temp = snake;
 
-	while(temp) {
+	while (temp) {
 		if (x == temp->x && y == temp->y) {
 			flag = true;
 			break;
@@ -43,7 +44,6 @@ static void spawn_food(snake_t *snake, food_t *food) {
 		food->y = y;;
 	}
 }
-
 
 static void add_part(snake_t * snake)
 {
@@ -125,7 +125,7 @@ static void print_snake(snake_t * snake)
 
 }
 
-static void move_snake(snake_t * snake, food_t *food)
+static void move_snake(snake_t * snake, food_t * food)
 {
 	snake_t *temp;
 	temp = snake;
@@ -204,18 +204,14 @@ static void move_snake(snake_t * snake, food_t *food)
 
 }
 
-
-static void print_food(food_t *food)
+static void print_food(food_t * food)
 {
 	mvaddch(food->y, food->x, '*');
 }
 
-
-
 int main(void)
 {
 	init();
-
 
 	snake_t *snake;
 	snake = malloc(sizeof(snake_t));
