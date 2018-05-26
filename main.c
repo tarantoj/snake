@@ -99,7 +99,7 @@ static void init(void)
 	initscr();
 	raw();
 	noecho();
-	timeout(0);
+	timeout(100);
 	keypad(stdscr, TRUE);
 	getmaxyx(stdscr, row, col);
 	curs_set(0);
@@ -165,13 +165,13 @@ static void print_snake(snake_t * snake)
 
 /*
  * Move snake in direction of head, checking if it collides with food
- * TODO Check for collision with self
  * TODO Implement score keeping
  */
-static void move_snake(snake_t * snake, food_t * food)
+static bool move_snake(snake_t * snake, food_t * food)
 {
 	snake_t *temp;
 	temp = snake;
+	bool alive = true;
 
 	// Find last part
 	while (temp->next) {
@@ -251,6 +251,19 @@ static void move_snake(snake_t * snake, food_t * food)
 		spawn_food(snake, food);
 	}
 
+	temp = snake->next;
+
+	while (temp) {
+		if (temp->x == snake->x && temp->y == snake->y) {
+			alive = false;
+			break;
+		} else {
+			temp = temp->next;
+		}
+	}
+
+	return alive;
+
 }
 
 /*
@@ -276,10 +289,11 @@ int main(void)
 	while (1) {
 		print_snake(snake);
 		print_food(food);
-		move_snake(snake, food);
+		if (move_snake(snake, food) == false)
+			break;
 		if (getch() == 'q')
 			break;
-		usleep(500000);
+	//	usleep(500000);
 
 	}
 
