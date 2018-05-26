@@ -208,6 +208,9 @@ static bool move_snake(snake_t * snake, food_t * food)
 			snake->dir = left;
 		}
 		break;
+	case 'q':
+		alive = false;
+		break;
 	default:
 		break;
 	}
@@ -292,8 +295,6 @@ int main(void)
 		print_snake(snake);
 		print_food(food);
 		if (move_snake(snake, food) == false)
-			break;
-		if (getch() == 'q')
 			break;
 		// usleep(500000);
 
