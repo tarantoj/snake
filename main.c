@@ -276,8 +276,9 @@ static void print_food(food_t * food)
 
 int main(void)
 {
+	// Initialise ncurses
 	init();
-
+	// Initialise snake
 	snake_t *snake;
 	snake = malloc(sizeof(snake_t));
 	food_t *food;
@@ -285,6 +286,8 @@ int main(void)
 	init_snake(snake);
 	spawn_food(snake, food);
 
+
+	// Game loop
 	while (1) {
 		print_snake(snake);
 		print_food(food);
@@ -296,6 +299,7 @@ int main(void)
 
 	}
 
+	// Cleanup before exit
 	free(food);
 	snake_t *temp = snake;
 	snake_t *prev = NULL;
