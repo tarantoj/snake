@@ -53,7 +53,6 @@ static void spawn_food(snake_t * snake, food_t * food)
 	}
 }
 
-
 // Increase the snake length
 static void add_part(snake_t * snake)
 {
@@ -68,22 +67,22 @@ static void add_part(snake_t * snake)
 	prev = temp;
 	temp = temp->next;
 	switch (prev->dir) {
-		case up:
-			temp->x = prev->x;
-			temp->y = prev->y + 1;
-			break;
-		case right:
-			temp->x = prev->x - 1;
-			temp->y = prev->y;
-			break;
-		case down:
-			temp->x = prev->x;
-			temp->y = prev->y + 1;
-			break;
-		case left:
-			temp->x = prev->x + 1;
-			temp->y = prev->y;
-			break;
+	case up:
+		temp->x = prev->x;
+		temp->y = prev->y + 1;
+		break;
+	case right:
+		temp->x = prev->x - 1;
+		temp->y = prev->y;
+		break;
+	case down:
+		temp->x = prev->x;
+		temp->y = prev->y + 1;
+		break;
+	case left:
+		temp->x = prev->x + 1;
+		temp->y = prev->y;
+		break;
 	}
 
 	temp->dir = prev->dir;
@@ -293,8 +292,18 @@ int main(void)
 			break;
 		if (getch() == 'q')
 			break;
-	//	usleep(500000);
+		// usleep(500000);
 
+	}
+
+	free(food);
+	snake_t *temp = snake;
+	snake_t *prev = NULL;
+
+	while (temp) {
+		prev = temp;
+		temp = temp->next;
+		free(prev);
 	}
 
 	endwin();
