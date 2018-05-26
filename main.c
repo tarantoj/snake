@@ -215,6 +215,9 @@ static bool move_snake(snake_t * snake, food_t * food)
 		break;
 	}
 
+	if (alive == false)
+		return alive;
+
 	// Let snake wrap around
 	switch (snake->dir) {
 	case up:
