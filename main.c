@@ -77,7 +77,7 @@ static void add_part(snake_t * snake)
 		break;
 	case down:
 		temp->x = prev->x;
-		temp->y = prev->y + 1;
+		temp->y = prev->y - 1;
 		break;
 	case left:
 		temp->x = prev->x + 1;
@@ -274,7 +274,6 @@ static bool move_snake(snake_t * snake, food_t * food)
 /*
  * Prints the food
  */
-
 static void print_food(food_t * food)
 {
 	mvaddch(food->y, food->x, '*');
