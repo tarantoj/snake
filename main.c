@@ -69,7 +69,7 @@ static void add_part(snake_t * snake)
 	switch (prev->dir) {
 	case up:
 		temp->x = prev->x;
-		temp->y = prev->y + 1;
+		temp->y = prev->y - 1;
 		break;
 	case right:
 		temp->x = prev->x - 1;
@@ -77,7 +77,7 @@ static void add_part(snake_t * snake)
 		break;
 	case down:
 		temp->x = prev->x;
-		temp->y = prev->y - 1;
+		temp->y = prev->y + 1;
 		break;
 	case left:
 		temp->x = prev->x + 1;
