@@ -12,6 +12,7 @@
 #define BODY_V '|'
 #define BODY_H '-'
 #define FOOD_C '#'
+#define SPEED 200
 
 typedef enum {
 	up, right, down, left
@@ -28,6 +29,7 @@ typedef struct food {
 } food_t;
 
 int row, col;
+unsigned int score = 0;
 
 /*
  * Spawns the food at random co ordinates
@@ -109,7 +111,7 @@ static void init(void)
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 	raw();
 	noecho();
-	timeout(100);
+	timeout(SPEED);
 	keypad(stdscr, TRUE);
 	getmaxyx(stdscr, row, col);
 	curs_set(0);
@@ -176,6 +178,7 @@ static void print_snake(snake_t * snake)
 	}
 	attroff(COLOR_PAIR(2));
 
+	mvprintw(row - 1, 0, "Score: %d", score);
 }
 
 /*
@@ -187,6 +190,7 @@ static bool move_snake(snake_t * snake, food_t * food)
 	snake_t *temp;
 	temp = snake;
 	bool alive = true;
+	static int speed = SPEED;
 
 	// Find last part
 	while (temp->next) {
@@ -269,6 +273,9 @@ static bool move_snake(snake_t * snake, food_t * food)
 	// If snake collides with food, respawn food and increase snake length
 	if (snake->x == food->x && snake->y == food->y) {
 		add_part(snake);
+		speed = speed >= 50 ? speed * 0.9 : 50;
+		score += 10;
+		timeout(speed);
 		spawn_food(snake, food);
 	}
 
