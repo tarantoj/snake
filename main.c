@@ -231,20 +231,20 @@ static bool move_snake(snake_t * snake, food_t * food)
 	switch (snake->dir) {
 	case up:
 		if (snake->y == 0) {
-			snake->y = row;
+			snake->y = row - 1;
 		} else {
 			--snake->y;
 		}
 		break;
 	case right:
-		if (snake->x == col) {
+		if (snake->x == col - 1) {
 			snake->x = 0;
 		} else {
 			++snake->x;
 		}
 		break;
 	case down:
-		if (snake->y == row) {
+		if (snake->y == row - 1) {
 			snake->y = 0;
 		} else {
 			++snake->y;
@@ -252,7 +252,7 @@ static bool move_snake(snake_t * snake, food_t * food)
 		break;
 	case left:
 		if (snake->x == 0) {
-			snake->x = col;
+			snake->x = col - 1;
 		} else {
 			--snake->x;
 		}
