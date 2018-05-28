@@ -129,7 +129,7 @@ static void init_snake(snake_t * snake)
  */
 static void print_snake(snake_t * snake)
 {
-	clear();
+	erase();
 	snake_t *temp;
 	temp = snake;
 
@@ -324,7 +324,7 @@ int main(void)
 		free(prev);
 	}
 
+	clear();
 	endwin();
-
 	return 0;
 }
