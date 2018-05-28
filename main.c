@@ -5,6 +5,12 @@
 #include <stdlib.h>
 
 #define SNAKE_LEN 3
+#define HEAD_UP '^'
+#define HEAD_RIGHT '>'
+#define HEAD_DOWN 'v'
+#define HEAD_LEFT '<'
+#define BODY_V '|'
+#define BODY_H '-'
 
 typedef enum {
 	up, right, down, left
@@ -137,16 +143,16 @@ static void print_snake(snake_t * snake)
 	char head;
 	switch (snake->dir) {
 	case up:
-		head = '^';
+		head = HEAD_UP;
 		break;
 	case right:
-		head = '>';
+		head = HEAD_RIGHT;
 		break;
 	case down:
-		head = 'v';
+		head = HEAD_DOWN;
 		break;
 	case left:
-		head = '<';
+		head = HEAD_LEFT;
 		break;
 	}
 	attron(COLOR_PAIR(1));
@@ -160,9 +166,9 @@ static void print_snake(snake_t * snake)
 	attron(COLOR_PAIR(2));
 	while (temp) {
 		if (temp->dir == down || temp->dir == up) {
-			body = '|';
+			body = BODY_V;
 		} else {
-			body = '-';
+			body = BODY_H;
 		}
 		mvaddch(temp->y, temp->x, body);
 		temp = temp->next;
