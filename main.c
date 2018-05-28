@@ -11,6 +11,7 @@
 #define HEAD_LEFT '<'
 #define BODY_V '|'
 #define BODY_H '-'
+#define FOOD_C '#'
 
 typedef enum {
 	up, right, down, left
@@ -292,7 +293,7 @@ static bool move_snake(snake_t * snake, food_t * food)
 static void print_food(food_t * food)
 {
 	attron(COLOR_PAIR(3));
-	mvaddch(food->y, food->x, '*');
+	mvaddch(food->y, food->x, FOOD_C);
 	attroff(COLOR_PAIR(3));
 }
 
