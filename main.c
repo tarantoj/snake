@@ -96,6 +96,10 @@ static void add_part(snake_t * snake)
 static void init(void)
 {
 	initscr();
+	start_color();
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 	raw();
 	noecho();
 	timeout(100);
@@ -145,11 +149,15 @@ static void print_snake(snake_t * snake)
 		head = '<';
 		break;
 	}
+	attron(COLOR_PAIR(1));
 	mvaddch(temp->y, temp->x, head);
+	attroff(COLOR_PAIR(1));
 
 	// Draw body
 	temp = temp->next;
 	char body;
+
+	attron(COLOR_PAIR(2));
 	while (temp) {
 		if (temp->dir == down || temp->dir == up) {
 			body = '|';
@@ -159,6 +167,7 @@ static void print_snake(snake_t * snake)
 		mvaddch(temp->y, temp->x, body);
 		temp = temp->next;
 	}
+	attroff(COLOR_PAIR(2));
 
 }
 
@@ -276,7 +285,9 @@ static bool move_snake(snake_t * snake, food_t * food)
  */
 static void print_food(food_t * food)
 {
+	attron(COLOR_PAIR(3));
 	mvaddch(food->y, food->x, '*');
+	attroff(COLOR_PAIR(3));
 }
 
 int main(void)
