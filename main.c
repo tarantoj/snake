@@ -28,7 +28,7 @@ typedef struct food {
 	int x, y;
 } food_t;
 
-int row, col;
+unsigned int row, col;
 unsigned int score = 0;
 
 /*
@@ -316,14 +316,12 @@ int main(void)
 	init_snake(snake);
 	spawn_food(snake, food);
 
-
 	// Game loop
 	while (1) {
 		print_snake(snake);
 		print_food(food);
 		if (move_snake(snake, food) == false)
 			break;
-		// usleep(500000);
 
 	}
 
