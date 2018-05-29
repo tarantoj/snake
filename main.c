@@ -183,7 +183,6 @@ static void print_snake(snake_t * snake)
 
 /*
  * Move snake in direction of head, checking if it collides with food
- * TODO Implement score keeping
  */
 static bool move_snake(snake_t * snake, food_t * food)
 {
