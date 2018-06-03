@@ -3,6 +3,7 @@
 #include <curses.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define SNAKE_LEN 3
 #define HEAD_UP '^'
@@ -13,6 +14,8 @@
 #define BODY_H '-'
 #define FOOD_C '#'
 #define SPEED 200
+#define GAME_OVER "Game Over!"
+#define GAME_OVER_MSG "Press Q to quit or R to restart"
 
 typedef enum {
 	up, right, down, left
@@ -31,6 +34,28 @@ typedef struct food {
 unsigned int row, col;
 unsigned int score = 0;
 
+static void game_over(void)
+{
+	char score_msg[32];
+	sprintf(score_msg, "Your Score: %d", score);
+	erase();
+	attron(COLOR_PAIR(2));
+	mvprintw(row/2 - 1, (col - strlen(GAME_OVER))/2, GAME_OVER);
+	mvprintw(row/2, (col - strlen(score_msg))/2, score_msg);
+	mvprintw(row/2 + 1, (col - strlen(GAME_OVER_MSG))/2, GAME_OVER_MSG);
+	attroff(COLOR_PAIR(2));
+	timeout(-1);
+
+	int ch;
+	while(1) {
+		ch = getch();
+		if (ch == 'q') {
+			return;
+		}
+	}
+
+
+}
 /*
  * Spawns the food at random co ordinates
  */
@@ -319,8 +344,10 @@ int main(void)
 	while (1) {
 		print_snake(snake);
 		print_food(food);
-		if (move_snake(snake, food) == false)
+		if (move_snake(snake, food) == false) {
+			game_over();
 			break;
+		}
 
 	}
 
