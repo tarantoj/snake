@@ -19,11 +19,10 @@
         pkgs.mkShell.override {
           stdenv = pkgs.clangStdenv;
         } {
-          packages = with pkgs; [
+          buildInputs = with pkgs; [
             gcc
             # make
             nil
-            cppdbg
             gnumake
             ncurses
             clang
