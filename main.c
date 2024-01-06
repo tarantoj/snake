@@ -38,7 +38,7 @@ static void game_over(void) {
   erase();
   attron(COLOR_PAIR(2));
   mvprintw(row / 2 - 1, (col - strlen(GAME_OVER)) / 2, GAME_OVER);
-  mvprintw(row / 2, (col - strlen(score_msg)) / 2, score_msg);
+  mvprintw(row / 2, (col - strlen(score_msg)) / 2, "%s", score_msg);
   mvprintw(row / 2 + 1, (col - strlen(GAME_OVER_MSG)) / 2, GAME_OVER_MSG);
   attroff(COLOR_PAIR(2));
   timeout(-1);
@@ -55,9 +55,8 @@ static void game_over(void) {
  * Spawns the food at random co ordinates
  */
 static void spawn_food(snake_t *snake, food_t *food) {
-  int x, y;
-  x = rand() % col;
-  y = rand() % row;
+  int x = rand() % col;
+  int y = rand() % row;
   bool flag = false;
 
   snake_t *temp;
@@ -350,5 +349,5 @@ int main(void) {
 
   clear();
   endwin();
-  return 0;
+  return EXIT_SUCCESS;
 }
