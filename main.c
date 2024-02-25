@@ -36,11 +36,11 @@ static void game_over(void) {
   char score_msg[32];
   sprintf(score_msg, "Your Score: %d", score);
   erase();
-  attron(COLOR_PAIR(2));
+  attron(COLOR_PAIR(COLOR_GREEN));
   mvprintw(row / 2 - 1, (col - strlen(GAME_OVER)) / 2, GAME_OVER);
   mvprintw(row / 2, (col - strlen(score_msg)) / 2, "%s", score_msg);
   mvprintw(row / 2 + 1, (col - strlen(GAME_OVER_MSG)) / 2, GAME_OVER_MSG);
-  attroff(COLOR_PAIR(2));
+  attroff(COLOR_PAIR(COLOR_GREEN));
   timeout(-1);
 
   int ch;
@@ -173,15 +173,15 @@ static void print_snake(snake_t *snake) {
     head = HEAD_LEFT;
     break;
   }
-  attron(COLOR_PAIR(1));
+  attron(COLOR_PAIR(COLOR_RED));
   mvaddch(temp->y, temp->x, head);
-  attroff(COLOR_PAIR(1));
+  attroff(COLOR_PAIR(COLOR_RED));
 
   // Draw body
   temp = temp->next;
   char body;
 
-  attron(COLOR_PAIR(2));
+  attron(COLOR_PAIR(COLOR_GREEN));
   while (temp) {
     if (temp->dir == down || temp->dir == up) {
       body = BODY_V;
@@ -191,7 +191,7 @@ static void print_snake(snake_t *snake) {
     mvaddch(temp->y, temp->x, body);
     temp = temp->next;
   }
-  attroff(COLOR_PAIR(2));
+  attroff(COLOR_PAIR(COLOR_GREEN));
 
   mvprintw(row - 1, 0, "Score: %d", score);
 }
@@ -310,9 +310,9 @@ static bool move_snake(snake_t *snake, food_t *food) {
  * Prints the food
  */
 static void print_food(food_t *food) {
-  attron(COLOR_PAIR(3));
+  attron(COLOR_PAIR(COLOR_YELLOW));
   mvaddch(food->y, food->x, FOOD_C);
-  attroff(COLOR_PAIR(3));
+  attroff(COLOR_PAIR(COLOR_YELLOW));
 }
 
 int main(void) {
