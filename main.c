@@ -221,21 +221,25 @@ static bool move_snake(snake_t *snake, food_t *food) {
   // Move snake head in original or specified direction
   int ch = getch();
   switch (ch) {
+  case 'k':
   case KEY_UP:
     if (snake->dir != down) {
       snake->dir = up;
     }
     break;
+  case 'l':
   case KEY_RIGHT:
     if (snake->dir != left) {
       snake->dir = right;
     }
     break;
+  case 'j':
   case KEY_DOWN:
     if (snake->dir != up) {
       snake->dir = down;
     }
     break;
+  case 'h':
   case KEY_LEFT:
     if (snake->dir != right) {
       snake->dir = left;
