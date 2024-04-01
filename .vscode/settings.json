@@ -1,0 +1,9 @@
+{
+  "makefile.launchConfigurations": [
+    {
+      "cwd": "/home/james/Documents/snake",
+      "binaryPath": "/home/james/Documents/snake/snake",
+      "binaryArgs": []
+    }
+  ]
+}
